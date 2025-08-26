@@ -1,0 +1,41 @@
+services:
+  catalogadb:
+    image: postgres
+
+  basketdb:
+    image: postgres
+   
+  distributedcache:
+    image: redis
+
+  orderdb:
+    image: mcr.microsoft.com/mssql/server
+
+
+  messagebroker:
+    image: rabbitmq:management
+
+  catalogapi:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: src/Services/Catalog/CatalogAPI/Dockerfile
+
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: src/Services/Basket/Basket.API/Dockerfile
+
+  discount.grpc:
+    image: ${DOCKER_REGISTRY-}discountgrpc
+    build:
+      context: .
+      dockerfile: src/Services/Discount/Discount.Grpc/Dockerfile
+
+volumes:
+  postgres_catalog:
+  postgres_basket:
+
+
+
